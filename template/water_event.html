@@ -1,0 +1,99 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #333333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .blog-card {
+      border: 1px solid #c8e6c9;
+      padding: 40px;
+      margin: 40px auto;
+      border-radius: 12px;
+      background-color: #f1f8e9;
+      max-width: 900px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .blog-card:hover {
+      transform: scale(1.01);
+    }
+
+    .blog-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+
+    strong {
+      color: #2e7d32;
+    }
+
+    .text-muted {
+      color: #6c757d !important;
+      font-size: 0.9rem;
+    }
+
+    .cta-box {
+      background-color: #dcedc8;
+      border-left: 6px solid #66bb6a;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-box h4 {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .cta-box p {
+      margin-bottom: 15px;
+    }
+
+    .cta-box a {
+      background-color: #66bb6a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-box a:hover {
+      background-color: #558b2f;
+    }
+  </style>
+
+  <!-- Blog Container -->
+  <div class="container">
+    <div class="blog-card">
+      <h1>Water Conservation Workshop: Educating the Future</h1>
+      <p class="text-muted">Posted on August 16, 2025</p>
+
+      <img src="{% static 'images/water1.jpeg' %}" alt="Water Conservation Workshop" class="blog-image" />
+
+      <p><strong>Green Horizon</strong> recently held an engaging workshop focused on teaching school children about sustainable water practices. Through fun activities and interactive sessions, students learned the importance of conserving water and simple steps they can take every day to save this precious resource.</p>
+
+      <p>The workshop covered topics like rainwater harvesting, reducing wastage, and the impact of water conservation on the environment. It was inspiring to see young minds eager to become water-saving champions in their homes and communities.</p>
+
+      <p>Check out the highlights from this session and join us in spreading awareness about protecting our most vital resource.</p>
+
+      <div class="cta-box">
+        <h4>💧 Want to host a workshop in your school?</h4>
+        <p>Partner with Green Horizon and empower the next generation of eco-leaders.</p><br>
+        <a href="#">Request a Workshop</a>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

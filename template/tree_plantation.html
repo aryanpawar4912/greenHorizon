@@ -1,0 +1,99 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #ffffff;
+    color: #333333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .blog-card {
+    border: 1px solid #c8e6c9;
+    padding: 40px;
+    margin: 40px auto;
+    border-radius: 12px;
+    background-color: #f1f8e9;
+    max-width: 900px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+
+  .blog-card:hover {
+    transform: scale(1.01);
+  }
+
+  strong {
+    color: #2e7d32;
+  }
+
+  .blog-image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 30px 0;
+  }
+
+  .text-muted {
+    color: #6c757d !important;
+    font-size: 0.9rem;
+  }
+
+  .cta-box {
+    background-color: #dcedc8;
+    border-left: 6px solid #66bb6a;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .cta-box h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .cta-box p {
+    margin-bottom: 15px;
+  }
+
+  .cta-box a {
+    background-color: #66bb6a;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .cta-box a:hover {
+    background-color: #558b2f;
+  }
+</style>
+
+<div class="container">
+  <div class="blog-card">
+    <h1>Successful Tree Plantation Drive in Mumbai</h1>
+    <p class="text-muted">Posted on August 16, 2025</p>
+
+    <img src="{% static 'images/plantation.jpeg' %}" alt="Tree Plantation Drive Mumbai" class="blog-image" />
+
+    <p>We’re proud to share that our recent tree plantation drive in Mumbai was a big success, with over 500 trees planted thanks to the amazing support from local volunteers. People from all walks of life came together to make our city greener and healthier.</p>
+
+    <p>These trees will help improve air quality, reduce heat, and support local wildlife. But planting is just the start—we’re committed to caring for these trees so they grow strong and thrive in the years ahead.</p>
+
+    <p><strong>Green Horizon</strong> is excited to continue this momentum with more drives and awareness programs across Mumbai. Join us in making a lasting impact—because together, we can build a greener future.</p>
+
+    <p>Stay tuned for more updates and ways to get involved!</p>
+
+    <div class="cta-box">
+      <h4>🌱 Ready to make a difference?</h4>
+      <p>Join our next plantation drive and help Mumbai breathe better.</p><br>
+      <a href="#">Get Involved</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

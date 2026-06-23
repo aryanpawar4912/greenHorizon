@@ -1,0 +1,101 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #333333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .blog-card {
+      border: 1px solid #c8e6c9;
+      padding: 40px;
+      margin: 40px auto;
+      border-radius: 12px;
+      background-color: #f1f8e9;
+      max-width: 900px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .blog-card:hover {
+      transform: scale(1.01);
+    }
+
+
+
+    strong {
+      color: #2e7d32;
+    }
+
+    .blog-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+
+    .text-muted {
+      color: #6c757d !important;
+      font-size: 0.9rem;
+    }
+
+    .cta-box {
+      background-color: #dcedc8;
+      border-left: 6px solid #66bb6a;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-box h4 {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .cta-box p {
+      margin-bottom: 15px;
+    }
+
+    .cta-box a {
+      background-color: #66bb6a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-box a:hover {
+      background-color: #558b2f;
+    }
+
+  </style>
+
+  <!-- Blog Container -->
+  <div class="container">
+    <div class="blog-card">
+      <h1>Green Campus – Building a Greener Future</h1>
+      <p class="text-muted">Posted on August 16, 2025</p>
+
+      <img src="{% static 'images/campus.jpg' %}" alt="Green Campus" class="blog-image" />
+
+      <p>A campus is more than just classrooms and buildings—it’s a space where young minds grow, and where the future begins. With our <strong>Green Campus</strong> initiative, we’re working to turn educational institutions into living examples of sustainability and environmental responsibility.</p>
+      <p>Through this project, <strong>Green Horizon</strong> helps schools and colleges adopt eco-friendly practices that make a real difference. From proper waste management and composting to energy-saving solutions and rainwater harvesting, we guide institutions on how to reduce their environmental footprint.</p>
+      <p>But it’s not just about systems—it’s about shaping a mindset. We involve students, teachers, and staff in hands-on activities that show how simple actions, like segregating waste or turning off unused lights, can have a lasting impact. <strong>Green Campus</strong> also encourages planting trees, creating kitchen gardens, and using green alternatives in everyday campus life.</p>
+      <p>The goal is to create spaces that don’t just teach sustainability—they live it. When students learn in an environment that respects nature, they carry those values with them for life.</p>
+
+      <div class="cta-box">
+        <h4>🌱 A green campus today means a greener world tomorrow.</h4>
+        <p>Join the movement and help us transform campuses into models of sustainability.</p><br>
+        <a href="#">Support the Initiative</a>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

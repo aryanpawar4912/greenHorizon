@@ -1,0 +1,36 @@
+{% extends "sample-page.html" %}
+{% block content %}
+<div class="container my-4">
+  <h3 class="mb-4"><i class="fas fa-hand-mobile me-2 text-success"></i> Mobile App Upload</h3>
+
+  <!-- Upload Form -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-upload me-2"></i> Upload New APK
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Latest APK Info -->
+  {% if latest_apk %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="fw-bold"><i class="fas fa-info-circle me-2 text-primary"></i> Latest APK</h5>
+      <p><strong>Version:</strong> {{ latest_apk.version }}</p>
+      <p><strong>Uploaded:</strong> {{ latest_apk.uploaded_at|date:"F j, Y, g:i a" }}</p>
+      {% if latest_apk.release_notes %}
+        <p><strong>Release Notes:</strong> {{ latest_apk.release_notes }}</p>
+      {% endif %}
+      <a href="{% url 'download_apk' %}" class="btn btn-outline-primary">
+        <i class="fas fa-download me-2"></i> Download Latest APK
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

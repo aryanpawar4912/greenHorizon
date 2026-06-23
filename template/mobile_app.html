@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-0 rounded-3 animate__animated animate__fadeIn">
+        
+        <!-- Header -->
+        <div class="card-header bg-gradient bg-success text-white text-center">
+          <h4 class="mb-0">
+            <i class="fas fa-mobile-alt me-2"></i> Green Horizon Mobile App
+          </h4>
+        </div>
+        
+        <!-- Body -->
+        <div class="card-body text-center">
+          <h5 class="fw-bold mb-3">Download the Latest Version</h5>
+          <p class="text-muted">
+            Stay connected with <strong>Green Horizon</strong> wherever you go.
+          </p>
+
+          <!-- Version + Upload Date -->
+          {% if apk %}
+            <p class="text-primary fw-bold mb-2">
+              <i class="fas fa-tag me-1"></i> Current Version: {{ apk.version }}
+            </p>
+            <p class="text-muted small">
+              <i class="fas fa-calendar-alt me-1"></i> Uploaded on: {{ apk.uploaded_at|date:"F j, Y, g:i a" }}
+            </p>
+
+            <!-- Release Notes -->
+            {% if apk.release_notes %}
+              <div class="alert alert-info text-start mt-3 animate__animated animate__fadeInUp">
+                <h6 class="fw-bold"><i class="fas fa-clipboard-list me-2"></i> Release Notes</h6>
+                <p class="mb-0">{{ apk.release_notes }}</p>
+              </div>
+            {% endif %}
+          {% endif %}
+
+          <!-- Download Button -->
+          <a href="{% url 'download_apk' %}" class="btn btn-success btn-lg mt-3 animate__animated animate__pulse animate__infinite">
+            <i class="fas fa-download me-2"></i> Download APK
+          </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="card-footer text-center text-muted small">
+          <i class="fas fa-sync-alt me-1"></i> Always updated — previous versions are auto‑removed.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

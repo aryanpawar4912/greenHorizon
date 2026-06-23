@@ -1,0 +1,100 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #333333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .blog-card {
+      border: 1px solid #c8e6c9;
+      padding: 40px;
+      margin: 40px auto;
+      border-radius: 12px;
+      background-color: #f1f8e9;
+      max-width: 900px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .blog-card:hover {
+      transform: scale(1.01);
+    }
+
+    .blog-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+
+    strong {
+      color: #2e7d32;
+    }
+
+    .text-muted {
+      color: #6c757d !important;
+      font-size: 0.9rem;
+    }
+
+    .cta-box {
+      background-color: #dcedc8;
+      border-left: 6px solid #66bb6a;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-box h4 {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .cta-box p {
+      margin-bottom: 15px;
+    }
+
+    .cta-box a {
+      background-color: #66bb6a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-box a:hover {
+      background-color: #558b2f;
+    }
+  </style>
+
+  <!-- Blog Container -->
+  <div class="container">
+    <div class="blog-card">
+      <h1>Environmental Excellence Award: Honoring Our Commitment to a Greener Tomorrow</h1>
+      <p class="text-muted">Posted on August 16, 2025</p>
+
+      <img src="{% static 'images/award.jpg' %}" alt="Environmental Excellence Award" class="blog-image" />
+
+      <p><strong>Green Horizon</strong> is proud to have been honored with the Environmental Excellence Award in recognition of our impactful work in promoting urban sustainability. This award celebrates the hard work, dedication, and passion of our team and volunteers who continue to drive change in our cities.</p>
+
+      <p>Over the years, we’ve worked closely with communities to plant trees, conserve water, reduce waste, and raise awareness about the importance of protecting our environment. Each initiative, big or small, has contributed to building more sustainable, resilient urban spaces.</p>
+
+      <p>This recognition motivates us to keep pushing forward and expanding our efforts. We invite you to read more about our journey and be a part of the movement for a cleaner, greener future.</p>
+
+      <div class="cta-box">
+        <h4>🏆 Want to celebrate with us?</h4>
+        <p>Explore our initiatives and see how you can contribute to the next milestone.</p><br>
+        <a href="#">View Our Projects</a>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

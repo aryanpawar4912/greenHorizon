@@ -1,0 +1,75 @@
+{% extends 'sample-page.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="margin-top: 70px;">📨 User Messages</h2>
+
+    <!-- Search Bar -->
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="messageSearch" class="form-control" placeholder="🔍 Search by Sr. No., name, email, subject...">
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle" id="messageTable">
+                <thead class="table-warning text-center">
+                    <tr>
+                        <th><i class="fa-solid fa-list-ol"></i> No.</th>
+                        <th><i class="fa-solid fa-user"></i> Name</th>
+                        <th><i class="fa-solid fa-envelope"></i> Email</th>
+                        <th><i class="fa-solid fa-heading"></i> Subject</th>
+                        <th><i class="fa-solid fa-comment-dots"></i> Message</th>
+                        <th><i class="fa-solid fa-calendar-days"></i> Date </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in messages %}
+                    <tr data-srno="{{ forloop.counter }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ msg.name|default:"—" }}</td>
+                        <td>{{ msg.email|default:"—" }}</td>
+                        <td>{{ msg.subject|default:"—" }}</td>
+                        <td>{{ msg.message }}</td>
+                        <td>{{ msg.date_sent|date:"d M Y, h:i A" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            🚫 No messages found!
+        </div>
+    {% endif %}
+</div>
+
+<!-- Sticky Header Styling -->
+<style>
+    thead th {
+        position: sticky;
+        top: 0;
+        background-color: #fff3cd;
+        z-index: 1;
+    }
+    #messageTable tbody tr[data-match="true"] {
+        background-color: #fffbea;
+    }
+</style>
+
+<!-- JavaScript for Search Filter with Sr. No. Support -->
+<script>
+    document.getElementById('messageSearch').addEventListener('keyup', function () {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#messageTable tbody tr');
+
+        rows.forEach(row => {
+            const srNo = row.getAttribute('data-srno') || '';
+            const rowText = row.textContent.toLowerCase();
+            const match = rowText.includes(searchValue) || srNo.includes(searchValue);
+            row.style.display = match ? '' : 'none';
+            row.setAttribute('data-match', match);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'sample-page.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="margin-top: 70px;">🙋‍♂️ Volunteer Applications</h2>
+
+    <!-- Search Bar -->
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="volunteerSearch" class="form-control" placeholder="🔍 Search by Sr. No., name, email, phone, or interest...">
+        </div>
+    </div>
+
+    {% if volunteers %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle" id="volunteerTable">
+                <thead class="table-success text-center">
+                    <tr>
+                        <th><i class="fa-solid fa-list-ol"></i> No.</th>
+                        <th><i class="fa-solid fa-user"></i> Name</th>
+                        <th><i class="fa-solid fa-envelope"></i> Email</th>
+                        <th><i class="fa-solid fa-phone"></i> Phone</th>
+                        <th><i class="fa-solid fa-heart"></i> Interest</th>
+                        <th><i class="fa-solid fa-calendar-days"></i> Date Applied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for volunteer in volunteers %}
+                    <tr data-srno="{{ forloop.counter }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ volunteer.name }}</td>
+                        <td>{{ volunteer.email }}</td>
+                        <td>{{ volunteer.phone }}</td>
+                        <td>{{ volunteer.get_interest_display }}</td>
+                        <td>{{ volunteer.date_applied|date:"d M Y, h:i A" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            🚫 No volunteer applications found!
+        </div>
+    {% endif %}
+</div>
+
+<!-- Sticky Header Styling -->
+<style>
+    thead th {
+        position: sticky;
+        top: 0;
+        background-color: #d4edda;
+        z-index: 1;
+    }
+    #volunteerTable tbody tr[data-match="true"] {
+        background-color: #f0fff4;
+    }
+</style>
+
+<!-- JavaScript for Search Filter with Sr. No. Support -->
+<script>
+    document.getElementById('volunteerSearch').addEventListener('keyup', function () {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#volunteerTable tbody tr');
+
+        rows.forEach(row => {
+            const srNo = row.getAttribute('data-srno') || '';
+            const rowText = row.textContent.toLowerCase();
+            const match = rowText.includes(searchValue) || srNo.includes(searchValue);
+            row.style.display = match ? '' : 'none';
+            row.setAttribute('data-match', match);
+        });
+    });
+</script>
+{% endblock %}

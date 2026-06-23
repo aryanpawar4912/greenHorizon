@@ -1,0 +1,105 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Alert Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h2 class="mb-4 text-center">
+        <i class="fa-solid fa-donate text-success me-2"></i>
+        My Donation History
+    </h2>
+
+    <!-- Search Bar -->
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="userDonationSearch" class="form-control" placeholder="🔍 Search by Sr. No., date, or amount...">
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle" id="userDonationTable">
+            <thead class="table-success text-center">
+                <tr>
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>  <!-- Added to keep alignment -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for donation in donations %}
+                <tr data-srno="{{ forloop.counter }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ donation.created_at|date:"d M, Y h:i A" }}</td>
+                    <td>₹{{ donation.amount }}</td>
+                    <td>{{ donation.name }}</td>
+                    <td>{{ donation.email }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'donation_receipt' donation.order_id %}" class="btn btn-sm btn-outline-success" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-file-download"></i> Receipt
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if not donations %}
+        <div class="alert alert-info text-center">
+            You haven't made any donations yet.
+        </div>
+    {% endif %}
+</div>
+
+<!-- Styling Enhancements -->
+<style>
+    thead th {
+        position: sticky;
+        top: 0;
+        background-color: #d4edda;
+        z-index: 1;
+    }
+    #userDonationTable tbody tr[data-match="true"] {
+        background-color: #f0fff4;
+    }
+</style>
+
+<!-- JavaScript for Filter -->
+<script>
+    const searchInput = document.getElementById('userDonationSearch');
+
+    searchInput.addEventListener('keyup', function () {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#userDonationTable tbody tr');
+
+        rows.forEach(row => {
+            const srNo = row.getAttribute('data-srno') || '';
+            const date = row.cells[1].textContent.toLowerCase();
+            const amount = row.cells[2].textContent.toLowerCase();
+
+            const match = srNo.includes(searchValue) || date.includes(searchValue) || amount.includes(searchValue);
+            row.style.display = match ? '' : 'none';
+            row.setAttribute('data-match', match);
+        });
+    });
+
+    function clearDonationSearch() {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('keyup'));
+    }
+</script>
+{% endblock %}

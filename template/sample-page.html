@@ -1,0 +1,157 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Admin Panel{% endblock %}</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
+  <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .sidebar-link:hover {
+      background-color: #f0f4f7;
+      border-left: 4px solid #0d6efd;
+      transition: all 0.2s ease-in-out;
+    }
+    .sidebar-link.active {
+      background-color: #e9f5ff;
+      border-left: 4px solid #0d6efd;
+      font-weight: 600;
+    }
+    .app-topstrip {
+      border-bottom: 1px solid #dee2e6;
+    }
+    .app-topstrip .btn {
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .nav-small-cap {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #6c757d;
+      text-transform: uppercase;
+      padding-left: 1rem;
+    }
+    .nav-small-cap-icon {
+      margin-right: 0.5rem;
+      color: #adb5bd;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!-- Topstrip -->
+<div class="app-topstrip bg-white py-3 px-4 w-100 d-lg-flex align-items-center justify-content-between shadow-sm">
+  <div class="d-flex align-items-center gap-3">
+    <a href="#" class="text-decoration-none text-dark fw-bold fs-5">
+      <i class="fa-solid fa-gauge text-primary"></i> Admin Panel
+    </a>
+  </div>
+  <div class="d-flex align-items-center gap-3">
+    <span class="text-muted">Welcome, Admin</span>
+    <a class="btn btn-outline-primary" href="{% url 'admin_logout' %}">
+      <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<aside class="left-sidebar bg-light">
+  <div>
+    <div class="brand-logo d-flex align-items-center justify-content-between px-5 py-1">
+      <!-- Left: Logo -->
+      <a href="/" class="logo-img d-flex align-items-center gap-2 text-decoration-none">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 40px;">
+        <span class="brand-name d-xl-none d-inline d-lg-inline">Green Horizon</span>
+      </a>
+
+      <!-- Right: Name (for larger screens) -->
+      <span class="brand-name d-none d-xl-inline">Green Horizon</span>
+
+      <!-- Sidebar Close Button -->
+      <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+        <i class="ti ti-x fs-6"></i>
+      </div>
+    </div>
+
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
+          <ul id="sidebarnav" class="px-2">
+            <li class="nav-small-cap">
+              <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+              <span class="hide-menu">Navigation</span>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{% url 'dashboard' %}">
+                <i class="fa-solid fa-gauge"></i>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{% url 'admin_user' %}">
+                <i class="ti ti-users"></i>
+                <span class="hide-menu">Manage Users</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{% url 'admin_donation' %}">
+                <i class="ti ti-gift"></i>
+                <span class="hide-menu">Donation History</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{% url 'admin_messages' %}">
+                <i class="ti ti-message-circle"></i>
+                <span class="hide-menu">User Messages</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{% url 'admin_volunteer' %}">
+                <i class="ti ti-hand-stop"></i>
+                <span class="hide-menu">Volunteer Applications</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{% url 'admin_mobile_app' %}">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <span class="hide-menu">Mobile App</span>
+              </a>
+            </li>
+
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{% url 'admin_logout' %}">
+                <i class="ti ti-logout"></i>
+                <span class="hide-menu">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="body-wrapper px-4 py-3">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/sidebarmenu.js' %}"></script>
+  <script src="{% static 'js/app.min.js' %}"></script>
+  <script src="{% static 'js/chart.js' %}"></script>
+  <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

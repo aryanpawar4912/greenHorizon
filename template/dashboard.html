@@ -1,0 +1,173 @@
+{% extends 'sample-page.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top: -30px;">
+  <div class="card mb-4 mt-4">
+    <div class="card-body">
+      <h4 class="fw-semibold mb-0"><i class="fa-solid fa-gauge"></i>Admin Dashboard</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <i class="ti ti-users fs-2 text-success"></i>
+          <h5 class="mt-2">Total Users</h5>
+          <h4>{{ total_users }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <i class="ti ti-hand-stop fs-2 text-success"></i>
+          <h5 class="mt-2">Total Volunteers Applications</h5>
+          <h4>{{ total_volunteers }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4 mb-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <i class="ti ti-gift fs-2 text-success"></i>
+          <h5 class="mt-2">Total Donations</h5>
+          <h4>₹{{ total_donations }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Recent Donations</h5>
+          <canvas id="recentDonationChart" height="100"></canvas>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Monthly Donation Summary</h5>
+          <canvas id="monthlyDonationChart" height="100"></canvas>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Recent Donations</h5>
+          <ul class="list-group">
+            {% for don in recent_donations %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span><strong>{{ don.name }}</strong></span>
+                <span>₹{{ don.amount }}</span>
+              </li>
+            {% empty %}
+              <li class="list-group-item">No recent donations found.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Recent Messages</h5>
+          <ul class="list-group">
+            {% for msg in recent_messages %}
+              <li class="list-group-item">
+                <strong>{{ msg.name }}</strong> — {{ msg.subject }}<br>
+                <small>{{ msg.date_sent|date:"M d, Y H:i A" }}</small>
+              </li>
+            {% empty %}
+              <li class="list-group-item">No messages found.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    // Recent Donations Chart
+    const recentCtx = document.getElementById('recentDonationChart').getContext('2d');
+    new Chart(recentCtx, {
+      type: 'bar',
+      data: {
+        labels: {{ donation_labels|safe }},
+        datasets: [{
+          label: 'Recent Donations (₹)',
+          data: {{ donation_data|safe }},
+          backgroundColor: 'rgba(40, 167, 69, 0.6)',
+          borderColor: 'rgba(40, 167, 69, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const donorNames = {{ donor_names|safe }};
+                const index = context.dataIndex;
+                return `₹${context.parsed.y} by ${donorNames[index]}`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: value => '₹' + value
+            }
+          }
+        }
+      }
+    });
+  
+    // Monthly Donation Summary Chart
+    const monthlyCtx = document.getElementById('monthlyDonationChart').getContext('2d');
+    new Chart(monthlyCtx, {
+      type: 'line',
+      data: {
+        labels: {{ monthly_labels|safe }},
+        datasets: [{
+          label: 'Monthly Donations (₹)',
+          data: {{ monthly_data|safe }},
+          fill: false,
+          borderColor: 'rgba(0, 123, 255, 1)',
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: value => '₹' + value
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+{% endblock %}

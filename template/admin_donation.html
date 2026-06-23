@@ -1,0 +1,85 @@
+{% extends 'sample-page.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="margin-top: 70px;">💰 Donation History</h2>
+
+    <!-- Search Bar -->
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="donationSearch" class="form-control" placeholder="🔍 Search by Sr. No., name, email, payment ID...">
+        </div>
+    </div>
+
+    {% if donations %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle" id="donationTable">
+                <thead class="table-info text-center">
+                    <tr>
+                        <th><i class="fa-solid fa-list-ol"></i> No.</th>
+                        <th><i class="fa-solid fa-user"></i> Name</th>
+                        <th><i class="fa-solid fa-envelope"></i> Email</th>
+                        <th><i class="fa-solid fa-indian-rupee-sign"></i> Amount</th>
+                        <th><i class="fa-solid fa-receipt"></i> Payment ID</th>
+                        <th><i class="fa-solid fa-file-invoice"></i> Order ID</th>
+                        <th><i class="fa-solid fa-circle-check"></i> Status</th>
+                        <th><i class="fa-solid fa-calendar-days"></i> Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for donation in donations %}
+                    <tr data-srno="{{ forloop.counter }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ donation.name }}</td>
+                        <td>{{ donation.email }}</td>
+                        <td>₹{{ donation.amount }}</td>
+                        <td>{{ donation.payment_id|default:"—" }}</td>
+                        <td>{{ donation.order_id|default:"—" }}</td>
+                        <td>
+                            {% if donation.paid %}
+                                <span class="badge bg-success"><i class="bi bi-check-circle-fill"></i> Received</span>
+                            {% else %}
+                                <span class="badge bg-danger"><i class="bi bi-x-circle-fill"></i> Failed</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ donation.created_at|date:"d M Y, h:i A" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            🚫 No donations found!
+        </div>
+    {% endif %}
+</div>
+
+<!-- Sticky Header Styling -->
+<style>
+    thead th {
+        position: sticky;
+        top: 0;
+        background-color: #d1ecf1;
+        z-index: 1;
+    }
+    #donationTable tbody tr[data-match="true"] {
+        background-color: #e6f7ff;
+    }
+</style>
+
+<!-- JavaScript for Search Filter with Sr. No. Support -->
+<script>
+    document.getElementById('donationSearch').addEventListener('keyup', function () {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#donationTable tbody tr');
+
+        rows.forEach(row => {
+            const srNo = row.getAttribute('data-srno') || '';
+            const rowText = row.textContent.toLowerCase();
+            const match = rowText.includes(searchValue) || srNo.includes(searchValue);
+            row.style.display = match ? '' : 'none';
+            row.setAttribute('data-match', match);
+        });
+    });
+</script>
+{% endblock %}

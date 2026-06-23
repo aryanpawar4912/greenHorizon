@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login | Green Horizon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    body {
+      background: #eef6f3;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .form-card {
+      background-color: white;
+      padding: 2.5rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    .form-label {
+      font-weight: 500;
+    }
+    .form-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .form-footer a {
+      text-decoration: none;
+      color: #198754;
+      font-weight: 500;
+    }
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="form-card col-md-8 col-lg-5">
+      <h3 class="mb-4 text-center text-success d-flex justify-content-center align-items-center gap-2">
+        <i class="bi bi-box-arrow-in-right"></i> Admin Panel Login
+      </h3>
+
+      <form method="POST" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-warning mt-2">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+
+        <div class="d-flex justify-content-between mt-4">
+          <button type="submit" class="btn btn-success px-4">Login</button>
+          <button type="reset" class="btn btn-outline-danger px-4" onclick="return confirm('Clear all fields?')">Clear</button>
+        </div>
+      </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

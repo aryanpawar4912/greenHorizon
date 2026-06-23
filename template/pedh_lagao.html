@@ -1,0 +1,91 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #333333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .blog-card {
+      border: 1px solid #c8e6c9;
+      padding: 40px;
+      margin: 40px auto;
+      border-radius: 12px;
+      background-color: #f1f8e9;
+      max-width: 900px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .blog-card:hover {
+      transform: scale(1.01);
+    }
+
+    strong {
+      color: #2e7d32;
+    }
+
+    .blog-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+
+    .text-muted {
+      color: #6c757d !important;
+      font-size: 0.9rem;
+    }
+
+    .cta-box {
+      background-color: #dcedc8;
+      border-left: 6px solid #66bb6a;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-box a {
+      background-color: #66bb6a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-box a:hover {
+      background-color: #558b2f;
+    }
+  </style>
+
+  <!-- Blog Container -->
+  <div class="container">
+    <div class="blog-card">
+      <h1>Pedh Lagao – Let’s Grow Together</h1>
+      <p class="text-muted">Posted on August 16, 2025</p>
+
+      <img src="{% static 'images/pedh_lagao.jpg' %}" alt="Tree Planting" class="blog-image" />
+
+      <p><strong>Pedh Lagao</strong> isn’t just about planting trees—it’s about growing something bigger together: hope, awareness, and a greener future.</p>
+      <p>At <strong>Green Horizon</strong>, we started this program with a simple goal: to increase green cover and reconnect people with nature. Whether it's in schools, villages, or city corners, <strong>Pedh Lagao</strong> brings people together—students, families, farmers, local communities—to plant trees and take care of them like they matter. Because they do.</p>
+      <p>Each tree is a small step toward cleaner air, cooler cities, and a healthier planet. But we believe that real change happens when people feel connected. That’s why this project also focuses on education—teaching kids and adults why trees matter, how ecosystems work, and what they can do in everyday life to help the environment.</p>
+      <p>We’re proud of how far <strong>Pedh Lagao</strong> has come, and we’re even more excited about where it’s going. The more people get involved, the stronger the roots of this movement become.</p>
+      <p>So if you believe in a greener tomorrow, come plant a tree with us today.</p>
+
+      <div class="cta-box">
+        <h4>🌿 Join us. Plant a tree. Be the change.</h4><br>
+        <a href="#">Support the Movement</a>
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

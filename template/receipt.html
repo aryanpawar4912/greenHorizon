@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Donation Receipt</title>
+
+    <!-- ✅ html2pdf.js for PDF Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .receipt-container {
+            position: relative;
+            background: white; /* keep the white background */
+            max-width: 740px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            padding: 35px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            overflow: hidden;
+        }
+
+        /* Watermark using ::before with low opacity */
+        .receipt-container::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px; /* adjust as needed */
+            height: 400px;
+            background-image: url("{% static 'images/logo.png' %}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            transform: translate(-50%, -50%);
+            opacity: 0.05; /* 👈 control the faintness here */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Ensure content stays above the watermark */
+        .receipt-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .content-row {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .qr-code {
+            flex: 1 1 200px;
+            max-width: 200px;
+            margin-top: 100px;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #43a047;
+            box-shadow: 0 0 10px rgba(67, 160, 71, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .qr-code:hover img {
+            transform: scale(1.05);
+        }
+
+        .details {
+            flex: 2 1 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .details h1 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.9rem;
+        }
+
+        .details p {
+            font-size: 1.05rem;
+            margin: 8px 0;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .details p strong {
+            color: #2e7d32;
+        }
+
+        .footer {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #666;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            font-style: italic;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #263238;
+        }
+
+        .btn-download {
+            background-color: #2e7d32;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background-color: #1b5e20;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .content-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .qr-code {
+                max-width: 100%;
+            }
+
+            .details {
+                flex: 1 1 100%;
+                text-align: center;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                width: 90%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ✅ Receipt Content -->
+    <div id="receipt-content" class="receipt-container" role="main" aria-label="Donation receipt">
+        <div class="content-row">
+            <div class="qr-code">
+                <img src="data:image/png;base64,{{ qr_image_b64 }}" alt="QR code for donation details" />
+            </div>
+
+            <div class="details">
+                <h1>Donation Receipt</h1>
+                <p><strong>Name:</strong> {{ donation.name }}</p>
+                <p><strong>Email:</strong> {{ donation.email }}</p>
+                <p><strong>Amount Donated:</strong> ₹{{ donation.amount }}</p>
+                <p><strong>Order ID:</strong> {{ donation.order_id }}</p>
+                <p><strong>Payment ID:</strong> {{ donation.payment_id }}</p>
+                <p><strong>Date:</strong> {{ donation.created_at|date:"F j, Y, g:i a" }}</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for supporting <strong>Green Horizon</strong>!</p>
+            <p>This receipt is generated electronically and is valid without a signature.</p>
+        </div>
+
+        <!-- ✅ Buttons at the bottom INSIDE the receipt -->
+        <div class="button-group">
+            <a href="{% url 'donation_history' %}" class="btn btn-back">← Back to History</a>
+            <button class="btn btn-download" onclick="downloadPDF()">⬇ Download Receipt</button>
+        </div>
+    </div>
+
+    <!-- ✅ JS: PDF Download -->
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('receipt-content');
+            const opt = {
+                margin: 0.5,
+                filename: 'Donation_Receipt_{{ donation.order_id }}.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+
+</body>
+</html>

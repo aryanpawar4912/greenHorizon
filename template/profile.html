@@ -1,0 +1,72 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5 fade-in">
+    <!-- Alert Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Profile Card -->   
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 profile-card animate__animated animate__fadeInUp">
+                <div class="card-body p-4">
+                    <!-- Profile Header -->
+                    <div class="d-flex align-items-center mb-4">
+                        {% if profile.profile_photo %}
+                            <img src="{{ profile.profile_photo.url }}" alt="Profile Picture" class="rounded-circle me-4 profile-img">
+                        {% else %}
+                            <img src="{% static 'images/profile.png' %}" alt="Default Profile" class="rounded-circle me-4 profile-img">
+                        {% endif %}
+                        <div>
+                            <h4 class="mb-0 text-success">{{ user.username }}</h4>
+                            <small class="text-muted">{{ user.email }}</small>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Profile Details -->
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <strong>Full Name:</strong><br>{{ profile.full_name }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <strong>Phone:</strong><br>{{ profile.mobile }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <strong>Address:</strong><br>{{ profile.address }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <strong>Interests:</strong><br>{{ profile.interests }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <strong>Gender:</strong><br>{{ profile.gender }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <strong>Birthday:</strong><br>{{ profile.birthday|date:"F j, Y" }}
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons --> 
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'update_profile' %}" class="btn btn-success px-4">
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </a>
+                        <a href="{% url 'logout' %}" class="btn btn-danger px-4">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

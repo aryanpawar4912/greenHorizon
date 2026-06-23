@@ -1,0 +1,96 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Alert Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h2 class="mb-4 text-center">
+        <i class="fa-solid fa-envelope-open-text text-primary me-2"></i>
+        My Messages History
+    </h2>
+
+    <!-- Search Bar -->
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="messageSearch" class="form-control" placeholder="🔍 Search by Sr. No., date, or subject...">
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle" id="messageTable">
+                <thead class="table-success text-center">
+                    <tr>
+                        <th>No.</th>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in messages %}
+                    <tr data-srno="{{ forloop.counter }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ msg.date_sent|date:"d M, Y h:i A" }}</td>
+                        <td>{{ msg.subject }}</td>
+                        <td>{{ msg.message }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            You haven't sent any messages yet.
+        </div>
+    {% endif %}
+</div>
+
+<!-- Styling Enhancements -->
+<style>
+    thead th {
+        position: sticky;
+        top: 0;
+        background-color: #d4edda;
+        z-index: 1;
+    }
+    #messageTable tbody tr[data-match="true"] {
+        background-color: #f0fff4;
+    }
+</style>
+
+<!-- JavaScript for Filter and Clear -->
+<script>
+    const messageSearchInput = document.getElementById('messageSearch');
+
+    messageSearchInput.addEventListener('keyup', function () {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#messageTable tbody tr');
+
+        rows.forEach(row => {
+            const srNo = row.getAttribute('data-srno') || '';
+            const date = row.cells[1].textContent.toLowerCase();
+            const subject = row.cells[2].textContent.toLowerCase();
+
+            const match = srNo.includes(searchValue) || date.includes(searchValue) || subject.includes(searchValue);
+            row.style.display = match ? '' : 'none';
+            row.setAttribute('data-match', match);
+        });
+    });
+
+    function clearMessageSearch() {
+        messageSearchInput.value = '';
+        messageSearchInput.dispatchEvent(new Event('keyup'));
+    }
+</script>
+{% endblock %}

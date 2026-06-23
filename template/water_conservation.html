@@ -1,0 +1,123 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #ffffff;
+    color: #333333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .blog-card {
+    border: 1px solid #c8e6c9;
+    padding: 40px;
+    margin: 40px auto;
+    border-radius: 12px;
+    background-color: #f1f8e9;
+    max-width: 900px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+
+  .blog-card:hover {
+    transform: scale(1.01);
+  }
+
+  strong {
+    color: #2e7d32;
+  }
+
+  .blog-image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 30px 0;
+  }
+
+  .text-muted {
+    color: #6c757d !important;
+    font-size: 0.9rem;
+  }
+
+  .cta-box {
+    background-color: #dcedc8;
+    border-left: 6px solid #66bb6a;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .cta-box h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .cta-box p {
+    margin-bottom: 15px;
+  }
+
+  .cta-box a {
+    background-color: #66bb6a;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .cta-box a:hover {
+    background-color: #558b2f;
+  }
+</style>
+
+<div class="container">
+  <div class="blog-card">
+    <h1>Water Conservation – Every Drop Counts</h1>
+    <p class="text-muted">Posted on August 16, 2025</p>
+
+    <img
+      src="{% static 'images/water_conservation.jpg' %}"
+      alt="Water Conservation"
+      class="blog-image"
+    />
+
+    <p>
+      We all need water—every day, for everything. But with climate change,
+      growing populations, and careless use, clean water is running out
+      faster than we think.
+    </p>
+    <p>
+      That’s why <strong>Green Horizon</strong> launched the Water Conservation
+      initiative. It’s all about helping people understand the value of water
+      and showing simple, effective ways to protect it.
+    </p>
+    <p>
+      We work with communities to build rainwater harvesting systems, stop
+      water wastage, and promote smart water use—whether that means fixing a
+      leaky tap, collecting rainwater, or learning how to reuse greywater at
+      home or on the farm.
+    </p>
+    <p>
+      But it’s not just about building systems—it’s about building awareness.
+      We organize school programs, workshops, and community drives to teach
+      people how small changes in daily life can lead to big savings. And when
+      people come together to take care of water, something powerful happens:
+      habits shift, and whole communities become more resilient.
+    </p>
+    <p>
+      This project reminds us that water is not unlimited—and it’s up to all
+      of us to protect it.
+    </p>
+
+    <div class="cta-box">
+      <h4>💧 Let’s not wait for a crisis.</h4>
+      <p>Start saving water today and be part of the change.</p><br>
+      <a href="#">Support the Initiative</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
