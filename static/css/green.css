@@ -1,0 +1,22 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar.scrolled {
+    background-color: #2e7d32 !important;
+    transition: 0.3s;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+.search-section input {
+    max-width: 400px;
+    display: inline-block;
+}
+
+footer {
+    background-color: #f8f9fa;
+}
