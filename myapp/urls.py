@@ -27,6 +27,7 @@ urlpatterns = [
     path('contact/',views.contact_view, name='contact'),
 
     path('download-apk/', views.download_apk, name='download_apk'),
+    
 
     path('water_conservation/',views.water_conservation, name='water_conservation'),
     path('pedh_lagao/',views.pedh_lagao, name='pedh_lagao'),
